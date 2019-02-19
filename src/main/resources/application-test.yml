@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: springboot-thymeleaf-layui-admin
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot_thymeleaf_layui_admin?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  servlet:
+    multipart:
+      enabled: true
+      max-request-size: 20MB
+      max-file-size: 5MB
+
+server:
+  port: 80
+  error:
+    path: /error
+
+logging:
+  level:
+    root: info
+    com.example.base: info
+    org.springframework.web: debug
+  path: /opt/logs/${spring.application.name}
