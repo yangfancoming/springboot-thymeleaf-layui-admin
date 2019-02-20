@@ -326,8 +326,11 @@
 </div>
 <script src="../../layuiadmin/layui/layui.js?t=1" th:src="@{/static/layuiadmin/layui/layui.js}"></script>
 <script>
-    layui.use(['index', 'console'], function () {
-    });
+    layui.config({
+        base: '/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'console']);
 </script>
 </body>
 </html>

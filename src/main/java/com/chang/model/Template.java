@@ -4,11 +4,14 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * 模板PO泪
+ * 模板PO
  * Created by ANdady on 2019/2/12.
  */
 @Entity
-@Table(name = "lantern_template")
+@Table(name = "demo_template", indexes = {
+        @Index(name = "column1_index", columnList = "column1"),
+        @Index(name = "column3_column4_column5_comboIndex", columnList = "column3, column4, column5")
+})
 public class Template {
 
     @Id
