@@ -3,6 +3,7 @@ package com.chang.controller;
 import com.google.common.collect.ImmutableBiMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ public class UploadController {
 
     private final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-    private final static String lantern_img_path = "/attachment/";
+    private final static String IMAGE_UPLOAD_PATH = "G:\\WORKSPACE\\JAVA\\springboot-thymeleaf-layui-admin\\src\\main\\resources\\static\\attachment"; //开发环境下对应的路径
 
     /**
      * 上传灯谜图片(题目图片)
@@ -32,14 +33,15 @@ public class UploadController {
      * @param file 图片文件
      * @return {Map} 返回数据
      */
-    @PostMapping(value = "/lantern_image")
+    @PostMapping(value = "/image")
     public Map<String, String> lanternImageUpload(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
         Map<String, String> result; //返回结果
 
         try {
             String filename = System.currentTimeMillis() + ".jpg"; //自定义文件名
 
-            File path = new File(request.getSession().getServletContext().getRealPath("/attachment/"));
+//            File path = new File(request.getSession().getServletContext().getRealPath("/static/attachment/"));
+            File path = new File( IMAGE_UPLOAD_PATH);
             if (!path.exists())
                 path.mkdir();
 

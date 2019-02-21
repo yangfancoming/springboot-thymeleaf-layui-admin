@@ -1,6 +1,7 @@
 package com.chang.service;
 
 import com.chang.model.Template;
+import com.chang.param.TemplateDTO;
 import com.chang.param.TemplateQuery;
 import com.chang.repository.TemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,10 +60,12 @@ public class TemplateService {
     /**
      * 插入template数据
      *
-     * @param template template对象
+     * @param templateDTO templateDTO参数
      * @throws Exception
      */
-    public void saveTemplate(Template template) throws Exception {
+    public void saveTemplate(TemplateDTO templateDTO) throws Exception {
+        Template template = templateDTO.getTemplInstance();
+
         template.setCreatedDt(new Timestamp(System.currentTimeMillis()));
         templateRepository.save(template);
     }

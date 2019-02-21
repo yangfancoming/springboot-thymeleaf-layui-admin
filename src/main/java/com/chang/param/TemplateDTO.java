@@ -1,43 +1,25 @@
-package com.chang.model;
+package com.chang.param;
 
-import javax.persistence.*;
+import com.chang.model.Template;
+
 import java.sql.Timestamp;
 
 /**
- * 模板PO
- * Created by ANdady on 2019/2/12.
+ * Created by ANdady on 2019/2/22.
  */
-@Entity
-@Table(name = "demo_template", indexes = {
-        @Index(name = "column1_index", columnList = "column1"),
-        @Index(name = "column2_column3_column4_comboIndex", columnList = "column2, column3, column4")
-})
-public class Template {
+public class TemplateDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String column1;
     private String column2;
     private String column3;
     private String column4;
     private String column5;
 
-    private String imagePath; //图片路径
-    private String attachPath; //附件路径
-
-    private Timestamp createdDt;
+    private String imagePath;
+    private String attachPath;
 
     private Timestamp beginDt;
     private Timestamp endDt;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getColumn1() {
         return column1;
@@ -95,14 +77,6 @@ public class Template {
         this.attachPath = attachPath;
     }
 
-    public Timestamp getCreatedDt() {
-        return createdDt;
-    }
-
-    public void setCreatedDt(Timestamp createdDt) {
-        this.createdDt = createdDt;
-    }
-
     public Timestamp getBeginDt() {
         return beginDt;
     }
@@ -117,5 +91,21 @@ public class Template {
 
     public void setEndDt(Timestamp endDt) {
         this.endDt = endDt;
+    }
+
+    public Template getTemplInstance() {
+        Template template = new Template();
+        template.setColumn1(this.getColumn1());
+        template.setColumn2(this.getColumn2());
+        template.setColumn3(this.getColumn3());
+        template.setColumn4(this.getColumn4());
+        template.setColumn5(this.getColumn5());
+
+        template.setImagePath(this.getImagePath());
+
+        template.setBeginDt(this.getBeginDt());
+        template.setEndDt(this.endDt);
+
+        return template;
     }
 }

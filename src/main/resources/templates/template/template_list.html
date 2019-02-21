@@ -119,12 +119,12 @@
                     title: '添加template',
                     content: '/template/go_template_save', //连接
                     maxmin: true,
-                    area: ['800px', '550px'],
+                    area: ['100%', '100%'],
                     btn: ['确定', '取消'], yes: function (index, layero) {
-                        layer.msg('提交成功');
+//                        layer.msg('提交成功');
 
                         //点击确认触发 iframe 内容中的按钮提交
-                        var submit = layero.find('iframe').contents().find("#form-save-submit");
+                        var submit = layero.find('iframe').contents().find("#save-submit");
                         submit.click();
                     }
                 });
@@ -167,7 +167,7 @@
                 };
             },
             request: {
-                pageName: 'pageNo',
+                pageName: 'page',
                 limitName: 'limit'
             }
         });

@@ -1,12 +1,14 @@
 package com.chang.controller;
 
 import com.chang.model.Template;
+import com.chang.param.TemplateDTO;
 import com.chang.param.TemplateQuery;
 import com.chang.service.TemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,14 +68,14 @@ public class TemplateController {
     /**
      * 添加template数据
      *
-     * @param template template对象
+     * @param templateDTO templateDTO对象
      * @return {int} 状态码
      */
     @PostMapping(value = "/save")
     @ResponseBody
-    public int saveTemplate(@RequestBody Template template) {
+    public int saveTemplate(@RequestBody TemplateDTO templateDTO) {
         try {
-            templateService.saveTemplate(template);
+            templateService.saveTemplate(templateDTO);
             return 1;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
