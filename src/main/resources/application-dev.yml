@@ -30,10 +30,6 @@ server:
     path: /error
 
 logging:
-  level:
-    root: info
-    com.example.base: info
-    org.springframework.web: debug
-  path: /opt/logs/${spring.application.name}
+  config: classpath:logback-spring.xml
 
 
