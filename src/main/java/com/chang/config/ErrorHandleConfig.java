@@ -12,9 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +27,6 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("${server.error.path:${error.path:/error}}")
-@EnableConfigurationProperties({ServerProperties.class})
 public class ErrorHandleConfig implements ErrorController {
 
     private final Logger logger = LoggerFactory.getLogger(ErrorHandleConfig.class);
@@ -54,13 +52,40 @@ public class ErrorHandleConfig implements ErrorController {
      * @param response HttpServletResponse对象
      * @return {ModelAndView} 视图
      */
-    @RequestMapping(produces = "text/html",value = "404")
+    @GetMapping(produces = "text/html",value = "404")
     public ModelAndView errorHtml404(HttpServletRequest request,
                                      HttpServletResponse response) {
         response.setStatus(getStatus(request).value());
         Map<String, Object> model = getErrorAttributes(request,
                 isIncludeStackTrace(request, MediaType.TEXT_HTML));
+
+        logger.warn("************* 400 ERROR INFO *************");
+        logger.warn("404异常的请求URL: {}", model.get("path"));
+
         return new ModelAndView("/error/404", model);
+    }
+
+    /**
+     * 页面500的异常处理
+     *
+     * @param request HttpServletRequest对象
+     * @param response HttpServletResponse对象
+     * @return {ModelAndView} 视图
+     */
+    @GetMapping(value = "500", produces = "text/html")
+    public ModelAndView errorHtml500(HttpServletRequest request,
+                                     HttpServletResponse response) {
+        response.setStatus(getStatus(request).value());
+        Map<String, Object> model = getErrorAttributes(request,
+                isIncludeStackTrace(request, MediaType.TEXT_HTML));
+
+        logger.error("************* 500 ERROR INFO *************");
+        logger.error("error: {}", model.get("error"));
+        logger.error("status: {}", model.get("status"));
+        logger.error("path: {}", model.get("path"));
+        logger.error("message: {}", model.get("message"));
+
+        return new ModelAndView("/error/500", model);
     }
 
     /**

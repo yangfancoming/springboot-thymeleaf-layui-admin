@@ -2,7 +2,7 @@
 <configuration debug="true" scan="true" scanPeriod="1 seconds">
     <contextName>logback</contextName>
     <!-- 自定义属性 -->
-    <property name="app.name" value="seckill_1.0"/>
+    <property name="app.name" value="springboot-thymeleaf-layui-admin"/>
     <property name="env.level" value="dev"/>
     <property name="path" value="/opt/logs"/>
 

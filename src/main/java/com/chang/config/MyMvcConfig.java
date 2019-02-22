@@ -19,17 +19,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
 
-//    @Bean
-//    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
-//        return factory -> {
-//            factory.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400"));
-//            factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401"));
-//            factory.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/error/405"));
-//            factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
-//            factory.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
-//            factory.addErrorPages(new ErrorPage(Throwable.class, "/error/500"));
-//        };
-//    }
+    @Bean
+    public WebServerFactoryCustomizer<ConfigurableWebServerFactory> webServerFactoryCustomizer() {
+        return factory -> {
+            factory.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/error/400"));
+            factory.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/error/401"));
+            factory.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/error/405"));
+            factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/error/404"));
+            factory.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/error/500"));
+            factory.addErrorPages(new ErrorPage(Throwable.class, "/error/500"));
+        };
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
