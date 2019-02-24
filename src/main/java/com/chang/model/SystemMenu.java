@@ -26,9 +26,7 @@ public class SystemMenu {
     private String url;
     private int sortNo;
     private String icon;
-//    @Column(name = "is_parent")
     private boolean isParent;
-//    @Column(name = "is_delete")
     private boolean isDelete;
     private Timestamp updateTime;
 
@@ -37,17 +35,12 @@ public class SystemMenu {
     @NotFound(action = NotFoundAction.IGNORE)
     private SystemUser updateUser;
 
-//    @ManyToOne
-//    @JoinColumn(name = "parentId")
-//    @NotFound(action = NotFoundAction.IGNORE)
+
     @Transient
     private SystemMenu parentNode;
     @ManyToMany
     @JoinTable(name = "system_role_menu_ref", joinColumns = @JoinColumn(name = "menuId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
     private Set<SystemRole> roles;
-
-
-//    @OneToMany(fetch = FetchType.EAGER)
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "parentId")
