@@ -28,22 +28,27 @@ public class SystemMenu {
     private String icon;
     private boolean isParent;
     private boolean isDelete;
-    private Timestamp updateTime;
+    private Timestamp createDt;
+    private Timestamp updateDt;
 
     @OneToOne
-    @JoinColumn(name = "updateUserId")
+    @JoinColumn(name = "created_by")
     @NotFound(action = NotFoundAction.IGNORE)
-    private SystemUser updateUser;
+    private SystemUser createdBy;
+    @OneToOne
+    @JoinColumn(name = "updated_by")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SystemUser updatedBy;
 
 
     @Transient
     private SystemMenu parentNode;
     @ManyToMany
-    @JoinTable(name = "system_role_menu_ref", joinColumns = @JoinColumn(name = "menuId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+    @JoinTable(name = "system_role_menu_ref", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<SystemRole> roles;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parentId")
+    @JoinColumn(name = "parent_id")
     private List<SystemMenu> submenus; //子菜单
 
     public long getId() {
@@ -102,20 +107,36 @@ public class SystemMenu {
         isDelete = delete;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getCreateDt() {
+        return createDt;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setCreateDt(Timestamp createDt) {
+        this.createDt = createDt;
     }
 
-    public SystemUser getUpdateUser() {
-        return updateUser;
+    public Timestamp getUpdateDt() {
+        return updateDt;
     }
 
-    public void setUpdateUser(SystemUser updateUser) {
-        this.updateUser = updateUser;
+    public void setUpdateDt(Timestamp updateDt) {
+        this.updateDt = updateDt;
+    }
+
+    public SystemUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(SystemUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public SystemUser getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(SystemUser updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public SystemMenu getParentNode() {

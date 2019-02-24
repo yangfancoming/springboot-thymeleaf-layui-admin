@@ -27,14 +27,18 @@ public class SystemUser {
     private String password;
     private String phone;
     private String nickname;
-    private Timestamp createTime;
-    private Timestamp updateTime;
-    private Timestamp lastLoginTime;
+    private Timestamp createdDt;
+    private Timestamp updatedDt;
+    private Timestamp lastLoginDt;
 
     @OneToOne
-    @JoinColumn(name = "updateUserId")
+    @JoinColumn(name = "created_by")
     @NotFound(action = NotFoundAction.IGNORE)
-    private SystemUser updateUser;
+    private SystemUser createdBy;
+    @OneToOne
+    @JoinColumn(name = "updated_by")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SystemUser updatedBy;
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
     private Set<SystemRole> roles;
 
@@ -74,36 +78,44 @@ public class SystemUser {
         this.nickname = nickname;
     }
 
-    public Timestamp getCreateTime() {
-        return createTime;
+    public Timestamp getCreatedDt() {
+        return createdDt;
     }
 
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
+    public void setCreatedDt(Timestamp createdDt) {
+        this.createdDt = createdDt;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getUpdatedDt() {
+        return updatedDt;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedDt(Timestamp updatedDt) {
+        this.updatedDt = updatedDt;
     }
 
-    public Timestamp getLastLoginTime() {
-        return lastLoginTime;
+    public Timestamp getLastLoginDt() {
+        return lastLoginDt;
     }
 
-    public void setLastLoginTime(Timestamp lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
+    public void setLastLoginDt(Timestamp lastLoginDt) {
+        this.lastLoginDt = lastLoginDt;
     }
 
-    public SystemUser getUpdateUser() {
-        return updateUser;
+    public SystemUser getCreatedBy() {
+        return createdBy;
     }
 
-    public void setUpdateUser(SystemUser updateUser) {
-        this.updateUser = updateUser;
+    public void setCreatedBy(SystemUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public SystemUser getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(SystemUser updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Set<SystemRole> getRoles() {

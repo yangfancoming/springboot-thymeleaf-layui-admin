@@ -2,29 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Boomin Platform</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico" th:href="@{/static/layuiadmin/icon/favicon-128.ico}">
+    <title>系统菜单</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css"
-          th:href="@{/static/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css" th:href="@{/static/layuiadmin/layui/css/layui.css}"
+          media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" th:href="@{/static/layuiadmin/style/admin.css}"
           media="all">
-    <style type="text/css">
-        .btn-group-position {
-            /*text-align: right;*/
-            right: 0;
-            line-height: 42px;
-            padding: 0 15px 0 35px;
-            z-index: 999;
-        }
-
-        .layui-colla-title {
-            background-color: #ffffff;
-        }
-    </style>
 </head>
 <body>
 <div class="layui-card layadmin-header">
@@ -37,169 +23,69 @@
 </div>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
-        <!-- 菜单栏 -->
-        <div class="layui-col-md6">
+        <div class="layui-col-md12">
+
             <div class="layui-card">
-                <div class="layui-card-header">页面菜单</div>
-                <div class="layui-card-body">
-                    <div class="layui-collapse" lay-filter="component-panel11" style="display: none;">
-                        <!-- 一级菜单 -->
-                        <div class="layui-colla-item layui-row" th:each="menu : ${menus}">
-                            <div class="layui-colla-title layui-col-md10">
-                                <span th:text="${menu.name}">一级菜单</span>
-                            </div>
-                            <div class="layui-col-md2 btn-group-position">
-                                <div class="layui-btn-group">
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm">
-                                        <i class="layui-icon layui-icon-edit"></i>
-                                    </button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm">
-                                        <i class="layui-icon layui-icon-delete"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- 二级菜单 -->
-                            <div class="layui-colla-content" th:if="${not #lists.isEmpty(menu.submenus)}">
-                                <div class="layui-collapse">
-                                    <div class="layui-colla-item">
-                                        <h2 class="layui-colla-title">宋代</h2>
-                                        <div class="layui-colla-content">
-                                            <p>比如苏轼、李清照</p>
-                                        </div>
-                                    </div>
-                                    <div class="layui-colla-item">
-                                        <h2 class="layui-colla-title">当代</h2>
-                                        <div class="layui-colla-content">
-                                            <p>比如贤心</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                    <div class="layui-card-header">查询条件</div>
+                    <div class="layui-card-body layui-row layui-col-space10">
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label">字段1：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="column1" placeholder="字段1的查询条件"
+                                       autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                    </div>
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label">字段2：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="column2" placeholder="字段2的查询条件"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label">字段3：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="column3" placeholder="字段3的查询条件"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-col-md3">
+                            <label class="layui-form-label">字段4：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="column4" placeholder="字段4的查询条件"
+                                       autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
 
-                    <div class="layui-collapse" lay-filter="component-panel">
-                        <div class="layui-colla-item">
-                            <h2 class="layui-colla-title">
-                                <span>一级菜单名称</span>
-                                <div class="layui-btn-group btn-group-position">
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="modify">
-                                        <i class="layui-icon layui-icon-edit"></i>
-                                    </button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm" data-type="delete">
-                                        <i class="layui-icon layui-icon-delete"></i>
-                                    </button>
-                                </div>
-                            </h2>
-                            <!--<div class="btn-group-position layui-col-md2">
-                                <div class="layui-btn-group">
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm">
-                                        <i class="layui-icon layui-icon-edit"></i>
-                                    </button>
-                                    <button class="layui-btn layui-btn-primary layui-btn-sm">
-                                        <i class="layui-icon layui-icon-delete"></i>
-                                    </button>
-                                </div>
-                            </div>-->
-
-                            <div class="layui-colla-content layui-show">
-                                <div class="layui-collapse">
-                                    <div class="layui-colla-item">
-                                        <h2 class="layui-colla-title">宋代</h2>
-                                        <div class="layui-colla-content">
-                                            <p>比如苏轼、李清照</p>
-                                        </div>
-                                    </div>
-                                    <div class="layui-colla-item">
-                                        <h2 class="layui-colla-title">当代</h2>
-                                        <div class="layui-colla-content">
-                                            <p>比如贤心</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-colla-item">
-                            <h2 class="layui-colla-title">科学家</h2>
-                            <div class="layui-colla-content">
-                                <p>伟大的科学家</p>
-                            </div>
-                        </div>
-                        <div class="layui-colla-item">
-                            <h2 class="layui-colla-title">艺术家</h2>
-                            <div class="layui-colla-content">
-                                <p>浑身散发着艺术细胞</p>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="form-search">
+                                    <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i> 查询
+                                </button>
+                                <button class="layui-btn layui-btn-primary layuiadmin-btn-list" lay-filter="form-reset">
+                                    <i class="layui-icon layui-icon-refresh layuiadmin-button-btn"></i> 重置
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- 菜单信息 -->
-        <div class="layui-col-md6">
+
             <div class="layui-card">
-                <div class="layui-card-header"></div>
                 <div class="layui-card-body">
-                    <form class="layui-form" action="" lay-filter="modify-form">
-                        <div class="layui-row layui-col-space10 layui-form-item">
-                            <div class="layui-col-lg6">
-                                <label class="layui-form-label">员工姓名：</label>
-                                <div class="layui-input-block">
-                                    <input type="text" name="fullname" lay-verify="required" placeholder=""
-                                           autocomplete="off" class="layui-input">
-                                </div>
-                            </div>
-                            <div class="layui-col-lg6">
-                                <label class="layui-form-label">技术工种：</label>
-                                <div class="layui-input-block">
-                                    <select name="type" lay-verify="required" lay-filter="aihao">
-                                        <option value=""></option>
-                                        <option value="0">前端工程师</option>
-                                        <option value="1">Node.js工程师</option>
-                                        <option value="2">PHP工程师</option>
-                                        <option value="3">Java工程师</option>
-                                        <option value="4">运维</option>
-                                        <option value="4">视觉设计师</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">兴趣爱好：</label>
-                            <div class="layui-input-block">
-                                <input type="checkbox" name="interest[write]" title="写作">
-                                <input type="checkbox" name="interest[read]" title="阅读">
-                                <input type="checkbox" name="interest[code]" title="代码" checked>
-                                <input type="checkbox" name="interest[dreaming]" title="做梦">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">是否婚姻：</label>
-                            <div class="layui-input-block">
-                                <input type="checkbox" name="marriage" lay-skin="switch" lay-text="是|否">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">所属职称：</label>
-                            <div class="layui-input-block">
-                                <input type="radio" name="role" value="" title="经理">
-                                <input type="radio" name="role" value="" title="主管">
-                                <input type="radio" name="role" value="" title="码农" checked>
-                                <input type="radio" name="role" value="" title="端水">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">其它信息：</label>
-                            <div class="layui-input-block">
-                                <textarea name="other" placeholder="" class="layui-textarea"></textarea>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit lay-filter="modify-submit">确认修改</button>
-                            </div>
-                        </div>
-                    </form>
+                    <div style="padding-bottom: 10px;">
+                        <button class="layui-btn layuiadmin-btn-list" data-type="save">添加菜单</button>
+                        <button class="layui-btn layui-btn-danger layuiadmin-btn-list" data-type="batchdel">批量删除
+                        </button>
+                    </div>
+
+                    <table class="layui-hide" id="data-table" lay-filter="data-table"></table>
+
+                    <script type="text/html" id="table-toolbar">
+                        <a class="layui-btn layui-btn-xs" lay-event="modify">编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                    </script>
                 </div>
             </div>
         </div>
@@ -207,32 +93,95 @@
 </div>
 <script src="../../layuiadmin/layui/layui.js" th:src="@{/static/layuiadmin/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
-    layui.config({
-        base: '/static/layuiadmin/' //静态资源所在路径
-    }).extend({
-        index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'element'], function () {
+    layui.use(['table'], function () {
         var $ = layui.$;
-        var element = layui.element;
+        var table = layui.table;
         var form = layui.form;
 
-        //监听折叠
-        element.on('collapse(component-panel)', function (data) {
-            console.info(data);
+        //监听搜索
+        form.on('submit(form-search)', function (data) {
+            var field = data.field;
+            console.info(field);
+
+            //执行重载(查询条件)
+            table.reload('data-table', {
+                where: field
+            });
         });
 
         var active = {
-            modify: function () {
+            batchdel: function () {
                 layer.msg('执行批量删除(尚未实现)');
             },
-            delete: function () {
-                layer.msg('删除尼玛比');
+            save: function () {
+                layer.open({
+                    type: 2,
+                    title: '添加一级菜单',
+                    content: '/sysmenu/parent_save',
+                    maxmin: true,
+                    area: ['100%', '100%'],
+                    btn: ['确定', '取消'], yes: function (index, layero) {
+                        var submit = layero.find('iframe').contents().find("#save-submit");
+                        submit.click();
+                    }
+                });
             }
         };
 
         $('.layui-btn.layuiadmin-btn-list').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
+        });
+
+        table.render({
+            elem: '#data-table',
+            url: '/sysmenu',
+            toolbar: false,
+            defaultToolbar: [],
+            title: '系统菜单',
+            loading: true,
+            cols: [[
+                {type: 'checkbox', fixed: 'left', field: 'id', title: 'id'},
+                {field: 'parentName', title: '一级菜单', sort: false, templet: function (value) {
+                    var td = value.parent ? value.name : '';
+                    td += '';
+                    return td;
+                }},
+                {field: 'subName', title: '二级菜单', sort: false, templet: function (value) {
+                    return value.parent ? '' : value.name;
+                }},
+                {field: 'url', title: '访问链接', sort: false},
+                {field: 'sortNo', title: '序号', sort: false},
+                {fixed: 'right', title: '操作', toolbar: '#table-toolbar', width: 150}
+            ]],
+            parseData: function (result) {
+                return {
+                    'code': '0', //解析接口状态
+                    'msg': '加载成功', //解析提示文本
+                    'data': result //解析数据列表
+                };
+            }
+        });
+
+        //监听行工具事件
+        table.on('tool(table-toolbar)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'delete') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'modify') {
+                layer.prompt({
+                    formType: 2,
+                    value: data.email
+                }, function (value, index) {
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
         });
     });
 

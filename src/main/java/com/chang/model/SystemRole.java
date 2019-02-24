@@ -1,5 +1,8 @@
 package com.chang.model;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Set;
@@ -19,14 +22,24 @@ public class SystemRole {
     private long id;
     private String name;
     private String label;
-    private Timestamp updateTime;
+    private Timestamp createdDt;
+    private Timestamp updatedDt;
+
+    @OneToOne
+    @JoinColumn(name = "created_by")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SystemUser createdBy;
+    @OneToOne
+    @JoinColumn(name = "updated_by")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SystemUser updatedBy;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<SystemResource> resources;
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<SystemMenu> menus;
     @ManyToMany
-    @JoinTable(name = "system_user_role_ref", joinColumns = @JoinColumn(name = "roleId"), inverseJoinColumns = @JoinColumn(name = "userId"))
+    @JoinTable(name = "system_user_role_ref", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<SystemUser> users;
 
     public long getId() {
@@ -53,12 +66,36 @@ public class SystemRole {
         this.label = label;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getCreatedDt() {
+        return createdDt;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setCreatedDt(Timestamp createdDt) {
+        this.createdDt = createdDt;
+    }
+
+    public Timestamp getUpdatedDt() {
+        return updatedDt;
+    }
+
+    public void setUpdatedDt(Timestamp updatedDt) {
+        this.updatedDt = updatedDt;
+    }
+
+    public SystemUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(SystemUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public SystemUser getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(SystemUser updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Set<SystemResource> getResources() {

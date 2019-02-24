@@ -2,6 +2,7 @@ package com.chang.param;
 
 import com.chang.model.SystemMenu;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -13,9 +14,8 @@ public class SysMenuDTO {
     private String url;
     private int sortNo;
     private String icon;
-    private boolean isParent = false;
 
-    private long parentId;
+    private Long parentId;
     private List<Long> roleIds;
 
     public String getName() {
@@ -50,19 +50,11 @@ public class SysMenuDTO {
         this.icon = icon;
     }
 
-    public boolean isParent() {
-        return isParent;
-    }
-
-    public void setParent(boolean parent) {
-        isParent = parent;
-    }
-
-    public long getParentId() {
+    public Long getParentId() {
         return parentId;
     }
 
-    public void setParentId(long parentId) {
+    public void setParentId(Long parentId) {
         this.parentId = parentId;
     }
 
@@ -80,7 +72,7 @@ public class SysMenuDTO {
         menu.setUrl(this.getUrl());
         menu.setSortNo(this.getSortNo());
         menu.setIcon(this.getIcon());
-//        menu.setParent(this.isParent());
+        menu.setCreateDt(new Timestamp(System.currentTimeMillis()));
 
         return menu;
     }

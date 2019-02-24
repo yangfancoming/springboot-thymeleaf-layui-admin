@@ -19,15 +19,20 @@ public class SystemResource {
     private long id;
     private String name;
     private String matchUrl;
-    private Timestamp updateTime;
+    private Timestamp createdDt;
+    private Timestamp updatedDt;
 
     @OneToOne
-    @JoinColumn(name = "updateUserId")
+    @JoinColumn(name = "created_by")
     @NotFound(action = NotFoundAction.IGNORE)
-    private SystemUser updateUser;
+    private SystemUser createdBy;
+    @OneToOne
+    @JoinColumn(name = "updated_by")
+    @NotFound(action = NotFoundAction.IGNORE)
+    private SystemUser updatedBy;
 
     @ManyToMany
-    @JoinTable(name = "system_role_resource_ref", joinColumns = @JoinColumn(name = "resourceId"), inverseJoinColumns = @JoinColumn(name = "roleId"))
+    @JoinTable(name = "system_role_resource_ref", joinColumns = @JoinColumn(name = "resource_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<SystemRole> roles;
 
     public long getId() {
@@ -54,20 +59,36 @@ public class SystemResource {
         this.matchUrl = matchUrl;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public Timestamp getCreatedDt() {
+        return createdDt;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public void setCreatedDt(Timestamp createdDt) {
+        this.createdDt = createdDt;
     }
 
-    public SystemUser getUpdateUser() {
-        return updateUser;
+    public Timestamp getUpdatedDt() {
+        return updatedDt;
     }
 
-    public void setUpdateUser(SystemUser updateUser) {
-        this.updateUser = updateUser;
+    public void setUpdatedDt(Timestamp updatedDt) {
+        this.updatedDt = updatedDt;
+    }
+
+    public SystemUser getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(SystemUser createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public SystemUser getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(SystemUser updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public Set<SystemRole> getRoles() {
