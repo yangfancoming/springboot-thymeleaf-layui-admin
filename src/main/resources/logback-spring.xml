@@ -71,4 +71,7 @@
     <logger name="org.springframework.web" level="debug" additivity="false">
         <appender-ref ref="console"/>
     </logger>
+    <logger name="org.hibernate" level="debug" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
 </configuration>

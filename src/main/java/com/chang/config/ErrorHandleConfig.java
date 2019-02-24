@@ -83,16 +83,11 @@ public class ErrorHandleConfig implements ErrorController {
         logger.error("status: {}", model.get("status"));
         logger.error("path: {}", model.get("path"));
         logger.error("message: {}", model.get("message"));
+        logger.error("trace: {}", model.get("trace"));
 
         return new ModelAndView("/error/500", model);
     }
 
-    /**
-     * Determine if the stacktrace attribute should be included.
-     * @param request the source request
-     * @param produces the media type produced (or {@code MediaType.ALL})
-     * @return if the stacktrace attribute should be included
-     */
     private boolean isIncludeStackTrace(HttpServletRequest request,
                                         MediaType produces) {
         ErrorProperties.IncludeStacktrace include = this.serverProperties.getError().getIncludeStacktrace();

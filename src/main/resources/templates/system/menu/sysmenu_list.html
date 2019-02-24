@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Boomin Platform</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" th:href="@{/static/layuiadmin/icon/favicon-128.ico}">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../layuiadmin/layui/css/layui.css"
+          th:href="@{/static/layuiadmin/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../layuiadmin/style/admin.css" th:href="@{/static/layuiadmin/style/admin.css}"
+          media="all">
+</head>
+<body>
+<div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+        <a lay-href="">主页</a>
+        <a><cite>组件</cite></a>
+        <a><cite>数据表格</cite></a>
+        <a><cite>开启头部工具栏</cite></a>
+    </div>
+</div>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <!-- 菜单栏 -->
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">页面菜单</div>
+                <div class="layui-card-body">
+                    <div class="layui-collapse" lay-filter="component-panel">
+
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">文豪</h2>
+                            <div class="layui-colla-content layui-show">
+                                <div class="layui-collapse">
+                                    <div class="layui-colla-item">
+                                        <h2 class="layui-colla-title">宋代</h2>
+                                        <div class="layui-colla-content">
+                                            <p>比如苏轼、李清照</p>
+                                        </div>
+                                    </div>
+                                    <div class="layui-colla-item">
+                                        <h2 class="layui-colla-title">当代</h2>
+                                        <div class="layui-colla-content">
+                                            <p>比如贤心</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">科学家</h2>
+                            <div class="layui-colla-content">
+                                <p>伟大的科学家</p>
+                            </div>
+                        </div>
+                        <div class="layui-colla-item">
+                            <h2 class="layui-colla-title">艺术家</h2>
+                            <div class="layui-colla-content">
+                                <p>浑身散发着艺术细胞</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 菜单信息 -->
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"></div>
+                <div class="layui-card-body">
+                    <form class="layui-form" action="" lay-filter="modify-form">
+                        <div class="layui-row layui-col-space10 layui-form-item">
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">员工姓名：</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="fullname" lay-verify="required" placeholder=""
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-col-lg6">
+                                <label class="layui-form-label">技术工种：</label>
+                                <div class="layui-input-block">
+                                    <select name="type" lay-verify="required" lay-filter="aihao">
+                                        <option value=""></option>
+                                        <option value="0">前端工程师</option>
+                                        <option value="1">Node.js工程师</option>
+                                        <option value="2">PHP工程师</option>
+                                        <option value="3">Java工程师</option>
+                                        <option value="4">运维</option>
+                                        <option value="4">视觉设计师</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">兴趣爱好：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="interest[write]" title="写作">
+                                <input type="checkbox" name="interest[read]" title="阅读">
+                                <input type="checkbox" name="interest[code]" title="代码" checked>
+                                <input type="checkbox" name="interest[dreaming]" title="做梦">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">是否婚姻：</label>
+                            <div class="layui-input-block">
+                                <input type="checkbox" name="marriage" lay-skin="switch" lay-text="是|否">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">所属职称：</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="role" value="" title="经理">
+                                <input type="radio" name="role" value="" title="主管">
+                                <input type="radio" name="role" value="" title="码农" checked>
+                                <input type="radio" name="role" value="" title="端水">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">其它信息：</label>
+                            <div class="layui-input-block">
+                                <textarea name="other" placeholder="" class="layui-textarea"></textarea>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit lay-filter="modify-submit">确认修改</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../layuiadmin/layui/layui.js" th:src="@{/static/layuiadmin/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="none">
+    layui.config({
+        base: '/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'element'], function () {
+        var $ = layui.$;
+        var element = layui.element;
+        var form = layui.form;
+
+        element.render('collapse');
+        //监听折叠
+        element.on('collapse(component-panel)', function (data) {
+            console.info(data);
+        });
+
+    });
+
+    function datetimeFormat(v) {
+        var date = new Date(v);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ("0" + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ("0" + h) : h;
+        var M = date.getMinutes();
+        M = M < 10 ? ("0" + M) : M;
+        var str = y + "-" + m + "-" + d + " " + h + ":" + M;
+        console.info(str);
+
+        return str;
+    }
+</script>
+</body>
+</html>

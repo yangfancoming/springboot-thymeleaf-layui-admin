@@ -48,9 +48,23 @@ public class TemplateService {
             @Nullable
             @Override
             public Predicate toPredicate(Root<Template> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+//                List<Predicate> predicates = new ArrayList<>();
+//                if(null != minDate){
+//                    predicates.add(criteriaBuilder.greaterThan(root.get("subscribeTime"), minDate));
+//                }
+//                if(null != maxDate){
+//                    predicates.add(criteriaBuilder.lessThan(root.get("subscribeTime"), maxDate));
+//                }
+//                if(null != nickname){
+//                    predicates.add(criteriaBuilder.like(root.get("nickname"), "%"+nickname+"%"));
+//                }
+//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+
+
                 List<Predicate> list = new ArrayList<>();
                 Predicate[] predicates = new Predicate[list.size()];
-                return criteriaBuilder.and(list.toArray(predicates));
+                return criteriaQuery.where(list.toArray(predicates)).getRestriction();
             }
         }, pageable);
 
