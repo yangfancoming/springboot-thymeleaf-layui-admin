@@ -60,7 +60,7 @@ public class TemplateController {
      *
      * @return {String} 新增页面
      */
-    @GetMapping(value = "/go_template_save")
+    @GetMapping(value = "/save")
     public String goTemplateSave() {
         return "/template/template_save";
     }
@@ -89,7 +89,7 @@ public class TemplateController {
      * @param templateId templateId
      * @return {String} 编辑页面
      */
-    @GetMapping(value = "/go_template_modify/{template_id}")
+    @GetMapping(value = "/modify/{template_id}")
     public String goTemplateModify(@PathVariable(value = "template_id") long templateId) {
         return "/template/template_modify";
     }
