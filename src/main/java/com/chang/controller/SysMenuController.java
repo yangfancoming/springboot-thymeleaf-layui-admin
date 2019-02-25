@@ -112,25 +112,31 @@ public class SysMenuController {
     /**
      * 跳转至添加二级菜单页面
      *
+     * @param parentId 一级菜单ID
+     * @param model Model对象
      * @return {String} 添加二级菜单
      * @throws Exception
      */
-    @GetMapping(value = "/sysmenu/sub_save")
-    public String goSubMenuSave() throws Exception {
+    @GetMapping(value = "/sysmenu/{parent_id}/sub_save")
+    public String goSubMenuSave(@PathVariable(value = "parent_id") long parentId, Model model) throws Exception {
+        SystemMenu parentmenu = menuService.findSysMenu(parentId);
+        model.addAttribute("parentmenu", parentmenu);
+
         return "/system/menu/sysmenu_sub_save";
     }
 
     /**
      * 保存二级菜单信息
      *
+     * @param parentId 一级菜单ID
      * @param sysMenuDTO 请求参数
      * @return {int} 受影响行数
      */
-    @PostMapping(value = "/sysmenu/sub_save")
+    @PostMapping(value = "/sysmenu/{parent_id}/sub_save")
     @ResponseBody
-    public int saveSubMenu(@RequestBody SysMenuDTO sysMenuDTO) {
+    public int saveSubMenu(@PathVariable(value = "parent_id") Long parentId, @RequestBody SysMenuDTO sysMenuDTO) {
         try {
-            menuService.saveSubSysMenu(sysMenuDTO);
+            menuService.saveSubSysMenu(parentId, sysMenuDTO);
             return 1;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

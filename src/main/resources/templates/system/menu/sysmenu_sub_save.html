@@ -17,7 +17,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label">一级菜单：</label>
         <div class="layui-input-block">
-            <input type="text" value="${parentmenu.name}" class="layui-input">
+            <input type="hidden" id="parentmenu-id" value="parentmenu-id" th:value="${parentmenu.id}">
+            <input type="text" value="一级菜单" th:value="${parentmenu.name}" class="layui-input" disabled>
         </div>
     </div>
 
@@ -32,7 +33,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">菜单图标：</label>
         <div class="layui-input-inline">
-            <input type="text" name="icon" lay-verify="required" placeholder="菜单图标的样式类" autocomplete="off"
+            <input type="text" name="icon" placeholder="菜单图标的样式类" autocomplete="off"
                    class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">
@@ -43,7 +44,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">访问链接：</label>
         <div class="layui-input-block">
-            <input type="text" name="url" value="#" lay-verify="required" placeholder="输入页面对应的url(若为一级菜单则使用'#'代替)" autocomplete="off"
+            <input type="text" name="url" lay-verify="required" placeholder="输入页面对应的url" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
@@ -73,6 +74,7 @@
 
         //监听提交
         form.on('submit(save-submit)', function (data) {
+            var parentId = $('#parentmenu-id').val(); //获取一级菜单ID
             var field = data.field; //获取提交的字段(将数据提交至服务端)
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
@@ -80,7 +82,7 @@
 
             //提交 Ajax 成功后，关闭当前弹层并重载表格
             $.ajax({
-                url: '/sysmenu/sub_save',
+                url: '/sysmenu/' + parentId + '/sub_save',
                 type: 'post',
                 data: JSON.stringify(field),
                 dataType: 'json',

@@ -11,6 +11,11 @@
           media="all">
     <link rel="stylesheet" href="../layuiadmin/style/admin.css" th:href="@{/static/layuiadmin/style/admin.css}"
           media="all">
+    <style type="text/css">
+        .add-submenu-btn {
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="layui-card layadmin-header">
@@ -75,16 +80,23 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div style="padding-bottom: 10px;">
-                        <button class="layui-btn layuiadmin-btn-list" data-type="save">添加菜单</button>
-                        <button class="layui-btn layui-btn-danger layuiadmin-btn-list" data-type="batchdel">批量删除
+                        <button class="layui-btn layuiadmin-btn-list" data-type="save">
+                            <i class="layui-icon layui-icon-add-1"></i>添加菜单
+                        </button>
+                        <button class="layui-btn layui-btn-danger layuiadmin-btn-list" data-type="batchdel">
+                            <i class="layui-icon layui-icon-delete"></i>批量删除
                         </button>
                     </div>
 
                     <table class="layui-hide" id="data-table" lay-filter="data-table"></table>
 
                     <script type="text/html" id="table-toolbar">
-                        <a class="layui-btn layui-btn-xs" lay-event="modify">编辑</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">删除</a>
+                        <a class="layui-btn layui-btn-xs" lay-event="modify">
+                            <i class="layui-icon layui-icon-edit"></i>编辑
+                        </a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delete">
+                            <i class="layui-icon layui-icon-delete"></i>删除
+                        </a>
                     </script>
                 </div>
             </div>
@@ -143,8 +155,11 @@
             cols: [[
                 {type: 'checkbox', fixed: 'left', field: 'id', title: 'id'},
                 {field: 'parentName', title: '一级菜单', sort: false, templet: function (value) {
-                    var td = value.parent ? value.name : '';
-                    td += '';
+                    if (!value.parent) return '';
+                    var td = value.name;
+                    td += '<button type="button" onclick="goSubMenuSave(' + value.id + ')" class="layui-btn layui-btn-xs layui-btn-warm add-submenu-btn">' +
+                        '<i class="layui-icon layui-icon-add-1"></i>二级菜单' +
+                        '</button>';
                     return td;
                 }},
                 {field: 'subName', title: '二级菜单', sort: false, templet: function (value) {
@@ -184,6 +199,20 @@
             }
         });
     });
+
+    function goSubMenuSave(parentId) {
+        layer.open({
+            type: 2,
+            title: '添加一级菜单',
+            content: '/sysmenu/' + parentId + '/sub_save',
+            maxmin: true,
+            area: ['100%', '100%'],
+            btn: ['确定', '取消'], yes: function (index, layero) {
+                var submit = layero.find('iframe').contents().find("#save-submit");
+                submit.click();
+            }
+        });
+    }
 
     function datetimeFormat(v) {
         var date = new Date(v);

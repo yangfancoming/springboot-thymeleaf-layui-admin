@@ -99,10 +99,10 @@ public class SysMenuService {
      * @param sysMenuDTO 菜单参数
      * @throws Exception
      */
-    public void saveSubSysMenu(SysMenuDTO sysMenuDTO) throws Exception {
-        Assert.notNull(sysMenuDTO.getParentId(), "无法获取一级菜单的ID");
+    public void saveSubSysMenu(Long parentId, SysMenuDTO sysMenuDTO) throws Exception {
+        Assert.notNull(parentId, "一级菜单ID为空");
 
-        SystemMenu parentmenu = menuRepository.findById(sysMenuDTO.getParentId()).orElse(null);
+        SystemMenu parentmenu = menuRepository.findById(parentId).orElse(null);
         Assert.notNull(parentmenu, "无法获取一级菜单信息,");
 
         SystemMenu submenu = sysMenuDTO.getSysMenuInstance();
