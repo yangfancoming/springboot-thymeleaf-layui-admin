@@ -115,9 +115,42 @@ public class SysMenuService {
 
     public void modifyParentSysMenu(long menuId, SysMenuDTO sysMenuDTO) throws Exception {
 
+
     }
 
     public void modifySubSysMenu(long menuId, SysMenuDTO sysMenuDTO) throws Exception {
 
+    }
+
+    /**
+     * 删除一级菜单
+     *
+     * 注: 需删除与其关联的为二级菜单
+     *
+     * @param menuId 菜单ID
+     * @throws Exception
+     */
+    public void deleteSysMenus(long menuId) throws Exception {
+        SystemMenu menu = menuRepository.findById(menuId).orElse(null);
+        Assert.notNull(menu, "无法获取菜单信息（menuid不存在）");
+
+        if (menu.isParent()) deleteAllSubMenu(menu);
+
+        menu.setDelete(true);
+        menuRepository.save(menu);
+    }
+
+    /**
+     * 删除一级菜单所关联的二级菜单
+     *
+     * @param parentmenu 一级菜单
+     * @throws Exception
+     */
+    public void deleteAllSubMenu(SystemMenu parentmenu) throws Exception {
+        List<SystemMenu> submenus = parentmenu.getSubmenus();
+        if (submenus.isEmpty()) return;
+
+        submenus.stream().forEach(menu -> menu.setDelete(true));
+        menuRepository.saveAll(submenus);
     }
 }

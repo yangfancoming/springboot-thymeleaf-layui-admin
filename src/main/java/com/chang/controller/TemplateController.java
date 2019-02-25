@@ -89,9 +89,8 @@ public class TemplateController {
      * @param templateId templateId
      * @return {String} 编辑页面
      */
-    @GetMapping(value = "/go_template_modify/{templateId}")
-    public String goTemplateModify(@PathVariable(value = "templateId") long templateId) {
-        logger.info("templateId：{}", templateId);
+    @GetMapping(value = "/go_template_modify/{template_id}")
+    public String goTemplateModify(@PathVariable(value = "template_id") long templateId) {
         return "/template/template_modify";
     }
 
@@ -102,9 +101,9 @@ public class TemplateController {
      * @param template template对象
      * @return {int} 状态码
      */
-    @PutMapping(value = "/modify/{template}")
+    @PutMapping(value = "/modify/{template_id}")
     @ResponseBody
-    public int modifyTemplate(@PathVariable(value = "templateId") long templateId, @RequestBody Template template) {
+    public int modifyTemplate(@PathVariable(value = "template_id") long templateId, @RequestBody Template template) {
         try {
             templateService.modifyTemplate(templateId, template);
             return 1;

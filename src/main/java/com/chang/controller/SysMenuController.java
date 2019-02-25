@@ -10,10 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -138,5 +136,21 @@ public class SysMenuController {
             logger.error(e.getMessage(), e);
             return 0;
         }
+    }
+
+    /**
+     * 跳转至修改页面
+     *
+     * @param menuId 菜单ID
+     * @param model Model对象
+     * @return {String} 修改菜单
+     * @throws Exception
+     */
+    @GetMapping(value = "/sysmenu/modify/{menu_id}")
+    public String goSysMenuModify(@PathVariable(value = "menu_id") long menuId, Model model) throws Exception {
+        SystemMenu sysmenu = menuService.findSysMenu(menuId);
+        model.addAttribute("sysmenu", sysmenu);
+
+        return "/sysmenu/menu/sysmenu_modify";
     }
 }

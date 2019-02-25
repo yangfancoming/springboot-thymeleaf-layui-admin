@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,6 +28,7 @@ public class SystemUser {
     private String password;
     private String phone;
     private String nickname;
+    private String status;
     private Timestamp createdDt;
     private Timestamp updatedDt;
     private Timestamp lastLoginDt;
@@ -40,7 +42,7 @@ public class SystemUser {
     @NotFound(action = NotFoundAction.IGNORE)
     private SystemUser updatedBy;
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private Set<SystemRole> roles;
+    private Set<SystemRole> roles = new HashSet<>();
 
     public long getId() {
         return id;
@@ -76,6 +78,14 @@ public class SystemUser {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Timestamp getCreatedDt() {

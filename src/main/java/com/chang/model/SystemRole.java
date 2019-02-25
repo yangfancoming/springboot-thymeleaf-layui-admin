@@ -5,6 +5,7 @@ import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,12 +36,12 @@ public class SystemRole {
     private SystemUser updatedBy;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private Set<SystemResource> resources;
+    private Set<SystemResource> resources = new HashSet<>();
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private Set<SystemMenu> menus;
+    private Set<SystemMenu> menus = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "system_user_role_ref", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<SystemUser> users;
+    private Set<SystemUser> users = new HashSet<>();
 
     public long getId() {
         return id;

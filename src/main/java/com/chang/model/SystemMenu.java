@@ -6,6 +6,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -45,11 +47,11 @@ public class SystemMenu {
     private SystemMenu parentNode;
     @ManyToMany
     @JoinTable(name = "system_role_menu_ref", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<SystemRole> roles;
+    private Set<SystemRole> roles = new HashSet<>();
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_id")
-    private List<SystemMenu> submenus; //子菜单
+    private List<SystemMenu> submenus = new ArrayList<>(); //子菜单
 
     public long getId() {
         return id;
