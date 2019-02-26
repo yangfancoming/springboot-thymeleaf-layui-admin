@@ -35,26 +35,40 @@ public class SysMenuService {
      * 加载系统菜单(无需分页, 一次性全部显示)
      * <p>
      * tips: 先加载所有的父节点
+     * <p>
+     * update: 将匿名类换成了Lamda
      *
      * @param query 查询参数
      * @return {List} 系统菜单
      * @throws Exception
      */
     public List<SystemMenu> findAllSysMenu(SysMenuQuery query) throws Exception {
-        List<SystemMenu> menus = menuRepository.findAll(new Specification<SystemMenu>() {
-            @Nullable
-            @Override
-            public Predicate toPredicate(Root<SystemMenu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                List<Predicate> list = new ArrayList<>();
-                list.add(criteriaBuilder.isFalse(root.get("isDelete")));
-                list.add(criteriaBuilder.isTrue(root.get("isParent")));
+//        List<SystemMenu> menus = menuRepository.findAll(new Specification<SystemMenu>() {
+//            @Nullable
+//            @Override
+//            public Predicate toPredicate(Root<SystemMenu> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+//                List<Predicate> list = new ArrayList<>();
+//                list.add(criteriaBuilder.isFalse(root.get("isDelete")));
+//                list.add(criteriaBuilder.isTrue(root.get("isParent")));
+//
+//                Predicate[] predicates = new Predicate[list.size()];
+//                return criteriaQuery
+//                        .where(list.toArray(predicates))
+//                        .orderBy(criteriaBuilder.asc(root.get("sortNo")))
+//                        .getRestriction();
+//            }
+//        });
 
-                Predicate[] predicates = new Predicate[list.size()];
-                return criteriaQuery
-                        .where(list.toArray(predicates))
-                        .orderBy(criteriaBuilder.asc(root.get("sortNo")))
-                        .getRestriction();
-            }
+        List<SystemMenu> menus = menuRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            list.add(criteriaBuilder.isFalse(root.get("isDelete")));
+            list.add(criteriaBuilder.isTrue(root.get("isParent")));
+
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaQuery
+                    .where(list.toArray(predicates))
+                    .orderBy(criteriaBuilder.asc(root.get("sortNo")))
+                    .getRestriction();
         });
 
         menus.forEach(menu -> menu.getSubmenus().sort(Comparator.comparingInt(SystemMenu::getSortNo))); //对子菜单进行排序
@@ -118,7 +132,7 @@ public class SysMenuService {
     /**
      * 修改系统菜单
      *
-     * @param menuId 菜单ID
+     * @param menuId     菜单ID
      * @param sysMenuDTO 菜单DTO
      * @throws Exception
      */
@@ -135,7 +149,7 @@ public class SysMenuService {
 
     /**
      * 删除一级菜单
-     *
+     * <p>
      * 注: 需删除与其关联的为二级菜单
      *
      * @param menuId 菜单ID
