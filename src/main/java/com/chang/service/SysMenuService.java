@@ -14,10 +14,12 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ANdady on 2019/2/23.
@@ -62,7 +64,7 @@ public class SysMenuService {
 
         for (SystemMenu menu : menus) {
             int index = result.indexOf(menu); //获取元素下标
-            List<SystemMenu> submenus = menu.getSubmenus();
+            List<SystemMenu> submenus = menu.getSubmenus().stream().filter(submenu -> !submenu.isDelete()).collect(Collectors.toList()); //过滤已删除的子菜单
 
             result.addAll(index + 1, submenus);
         }
@@ -113,13 +115,22 @@ public class SysMenuService {
         menuRepository.save(parentmenu); //保存一级菜单
     }
 
-    public void modifyParentSysMenu(long menuId, SysMenuDTO sysMenuDTO) throws Exception {
+    /**
+     * 修改系统菜单
+     *
+     * @param menuId 菜单ID
+     * @param sysMenuDTO 菜单DTO
+     * @throws Exception
+     */
+    public void modifySysMenu(Long menuId, SysMenuDTO sysMenuDTO) throws Exception {
+        Assert.notNull(menuId, "菜单ID为空");
 
+        SystemMenu sysmenu = menuRepository.findById(menuId).orElse(null);
+        Assert.notNull(sysmenu, "无法获取菜单信息(菜单ID不存在)");
 
-    }
+        sysMenuDTO.transfer(sysmenu);
 
-    public void modifySubSysMenu(long menuId, SysMenuDTO sysMenuDTO) throws Exception {
-
+        menuRepository.save(sysmenu);
     }
 
     /**
@@ -130,9 +141,11 @@ public class SysMenuService {
      * @param menuId 菜单ID
      * @throws Exception
      */
-    public void deleteSysMenus(long menuId) throws Exception {
+    public void deleteSysMenus(Long menuId) throws Exception {
+        Assert.notNull(menuId, "菜单ID为空");
+
         SystemMenu menu = menuRepository.findById(menuId).orElse(null);
-        Assert.notNull(menu, "无法获取菜单信息（menuid不存在）");
+        Assert.notNull(menu, "无法获取菜单信息(菜单ID不存在)");
 
         if (menu.isParent()) deleteAllSubMenu(menu);
 

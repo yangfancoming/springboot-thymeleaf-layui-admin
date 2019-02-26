@@ -76,10 +76,10 @@ public class TemplateController {
     public int saveTemplate(@RequestBody TemplateDTO templateDTO) {
         try {
             templateService.saveTemplate(templateDTO);
-            return 1;
+            return 0;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return 0;
+            return 1;
         }
     }
 
@@ -106,10 +106,28 @@ public class TemplateController {
     public int modifyTemplate(@PathVariable(value = "template_id") long templateId, @RequestBody Template template) {
         try {
             templateService.modifyTemplate(templateId, template);
-            return 1;
+            return 0;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
+            return 1;
+        }
+    }
+
+    /**
+     * 删除template数据
+     *
+     * @param templateId 模板ID
+     * @return {int} 状态码
+     */
+    @DeleteMapping(value = "/delete/{template_id}")
+    @ResponseBody
+    public int deleteTemplate(@PathVariable(value = "template_id") Long templateId) {
+        try {
+            templateService.deleteTemplate(templateId);
             return 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return 1;
         }
     }
 }

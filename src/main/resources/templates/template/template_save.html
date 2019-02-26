@@ -107,7 +107,7 @@
                 });
             },
             done: function (res) {
-                if (res.code === '1') {
+                if (res.code === 0) {
                     $('#image-path').val(res.filename);
                     return layer.msg(res.msg, {icon: '1'});
                 } else {
@@ -151,9 +151,8 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (result) {
-                    if (result === 1) {
+                    if (result === 0) {
                         layer.msg('提交成功', {icon: 1});
-                        alert();
 
                         parent.layui.table.reload('data-table'); //重载表格
                         parent.layer.close(index); //再执行关闭

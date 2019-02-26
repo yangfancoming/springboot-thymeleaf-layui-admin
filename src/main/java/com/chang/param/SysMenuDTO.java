@@ -76,4 +76,11 @@ public class SysMenuDTO {
 
         return menu;
     }
+
+    public void transfer(SystemMenu menu) {
+        menu.setName(this.getName());
+        menu.setUrl(this.getUrl());
+        menu.setIcon(this.getIcon());
+        menu.setSortNo(this.getSortNo());
+    }
 }

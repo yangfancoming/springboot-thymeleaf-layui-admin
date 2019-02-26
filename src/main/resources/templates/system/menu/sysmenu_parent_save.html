@@ -79,7 +79,7 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (result) {
-                    if (result === 1) {
+                    if (result === 0) {
                         layer.msg('提交成功', {icon: 1});
 
                         parent.layui.table.reload('data-table'); //重载表格

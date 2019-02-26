@@ -102,10 +102,10 @@ public class SysMenuController {
     public int saveParentMenu(@RequestBody SysMenuDTO sysMenuDTO) {
         try {
             menuService.saveParentSysMenu(sysMenuDTO);
-            return 1;
+            return 0;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return 0;
+            return 1;
         }
     }
 
@@ -137,10 +137,10 @@ public class SysMenuController {
     public int saveSubMenu(@PathVariable(value = "parent_id") Long parentId, @RequestBody SysMenuDTO sysMenuDTO) {
         try {
             menuService.saveSubSysMenu(parentId, sysMenuDTO);
-            return 1;
+            return 0;
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            return 0;
+            return 1;
         }
     }
 
@@ -155,8 +155,45 @@ public class SysMenuController {
     @GetMapping(value = "/sysmenu/modify/{menu_id}")
     public String goSysMenuModify(@PathVariable(value = "menu_id") long menuId, Model model) throws Exception {
         SystemMenu sysmenu = menuService.findSysMenu(menuId);
-        model.addAttribute("sysmenu", sysmenu);
+        model.addAttribute("menu", sysmenu);
 
-        return "/sysmenu/menu/sysmenu_modify";
+        return "/system/menu/sysmenu_modify";
+    }
+
+    /**
+     * 修改菜单信息
+     *
+     * @param menuId 菜单ID
+     * @param sysMenuDTO 菜单DTO
+     * @return {int} 响应状态码
+     */
+    @PutMapping(value = "/sysmenu/modify/{menu_id}")
+    @ResponseBody
+    public int modifySysMenu(@PathVariable(value = "menu_id") Long menuId, @RequestBody SysMenuDTO sysMenuDTO) {
+        try {
+            menuService.modifySysMenu(menuId, sysMenuDTO);
+            return 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return 1;
+        }
+    }
+
+    /**
+     * 删除菜单
+     *
+     * @param menuId 菜单ID
+     * @return {int}
+     */
+    @DeleteMapping(value = "/sysmenu/delete/{menu_id}")
+    @ResponseBody
+    public int deleteSysMenu(@PathVariable(value = "menu_id") Long menuId) {
+        try {
+            menuService.deleteSysMenus(menuId);
+            return 0;
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return 1;
+        }
     }
 }

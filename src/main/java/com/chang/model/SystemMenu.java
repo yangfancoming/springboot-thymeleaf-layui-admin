@@ -42,7 +42,6 @@ public class SystemMenu {
     @NotFound(action = NotFoundAction.IGNORE)
     private SystemUser updatedBy;
 
-
     @Transient
     private SystemMenu parentNode;
     @ManyToMany

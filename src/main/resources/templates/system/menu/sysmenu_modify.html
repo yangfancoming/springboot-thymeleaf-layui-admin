@@ -11,21 +11,15 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>添加二级菜单</legend>
+    <legend>修改菜单</legend>
 </fieldset>
-<form action="" class="layui-form" id="save-form" lay-filter="save-form" style="padding: 20px 30px 0 0;">
-    <div class="layui-form-item">
-        <label class="layui-form-label">一级菜单：</label>
-        <div class="layui-input-block">
-            <input type="hidden" id="parentmenu-id" value="parentmenu-id" th:value="${parentmenu.id}">
-            <input type="text" value="一级菜单" th:value="${parentmenu.name}" class="layui-input" disabled>
-        </div>
-    </div>
+<form action="" class="layui-form" id="modify-form" lay-filter="modify-form" style="padding: 20px 30px 0 0;">
+    <input type="hidden" id="menu-id" value="menuid" th:value="${menu.id}">
 
     <div class="layui-form-item">
         <label class="layui-form-label">菜单名称：</label>
         <div class="layui-input-block">
-            <input type="text" name="name" lay-verify="required" placeholder="菜单名称" autocomplete="off"
+            <input type="text" name="name" th:value="${menu.name}" lay-verify="required" placeholder="菜单名称" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
@@ -33,7 +27,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">菜单图标：</label>
         <div class="layui-input-inline">
-            <input type="text" name="icon" placeholder="菜单图标的样式类" autocomplete="off"
+            <input type="text" name="icon" th:value="${menu.icon}" placeholder="菜单图标的样式类" autocomplete="off"
                    class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">
@@ -44,7 +38,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label">访问链接：</label>
         <div class="layui-input-block">
-            <input type="text" name="url" lay-verify="required" placeholder="输入页面对应的url" autocomplete="off"
+            <input type="text" name="url" th:value="${menu.url}" value="#" lay-verify="required" placeholder="输入页面对应的url(若为一级菜单则使用'#'代替)" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
@@ -52,13 +46,13 @@
     <div class="layui-form-item">
         <label class="layui-form-label">序号：</label>
         <div class="layui-input-block">
-            <input type="text" name="sortNo" lay-verify="required|sortno" placeholder="菜单的排序编号" autocomplete="off"
+            <input type="text" name="sortNo" th:value="${menu.sortNo}" lay-verify="required|sortno" placeholder="菜单的排序编号" autocomplete="off"
                    class="layui-input">
         </div>
     </div>
 
     <div class="layui-form-item layui-hide">
-        <input type="button" lay-submit lay-filter="save-submit" id="save-submit"
+        <input type="button" lay-submit lay-filter="modify-submit" id="modify-submit"
                value="确认添加">
     </div>
 </form>
@@ -73,8 +67,8 @@
         });
 
         //监听提交
-        form.on('submit(save-submit)', function (data) {
-            var parentId = $('#parentmenu-id').val(); //获取一级菜单ID
+        form.on('submit(modify-submit)', function (data) {
+            var menuid = $('#menu-id').val(); //菜单ID
             var field = data.field; //获取提交的字段(将数据提交至服务端)
             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
 
@@ -82,19 +76,19 @@
 
             //提交 Ajax 成功后，关闭当前弹层并重载表格
             $.ajax({
-                url: '/sysmenu/' + parentId + '/sub_save',
-                type: 'post',
+                url: '/sysmenu/modify/' + menuid,
+                type: 'put',
                 data: JSON.stringify(field),
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (result) {
                     if (result === 0) {
-                        layer.msg('提交成功', {icon: 1});
+                        layer.msg('修改成功', {icon: 1});
 
                         parent.layui.table.reload('data-table'); //重载表格
                         parent.layer.close(index); //再执行关闭
                     } else {
-                        layer.msg('提交失败', {icon: 5})
+                        layer.msg('修改失败', {icon: 5})
                     }
                 },
                 error: function () {
