@@ -44,29 +44,36 @@ public class TemplateService {
      */
     public Page<Template> findAllTemplate(int pageNo, int limit, final TemplateQuery query) {
         Pageable pageable = PageRequest.of(pageNo - 1, limit, Sort.by(Sort.Direction.DESC, "createdDt"));
-        Page<Template> page = templateRepository.findAll(new Specification<Template>() {
-            @Nullable
-            @Override
-            public Predicate toPredicate(Root<Template> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
-//                List<Predicate> predicates = new ArrayList<>();
-//                if(null != minDate){
-//                    predicates.add(criteriaBuilder.greaterThan(root.get("subscribeTime"), minDate));
-//                }
-//                if(null != maxDate){
-//                    predicates.add(criteriaBuilder.lessThan(root.get("subscribeTime"), maxDate));
-//                }
-//                if(null != nickname){
-//                    predicates.add(criteriaBuilder.like(root.get("nickname"), "%"+nickname+"%"));
-//                }
-//                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
-
-
-                List<Predicate> list = new ArrayList<>();
-                Predicate[] predicates = new Predicate[list.size()];
-                return criteriaQuery.where(list.toArray(predicates)).getRestriction();
-            }
+        Page<Template> page = templateRepository.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            Predicate[] predicates = new Predicate[list.size()];
+            return criteriaQuery.where(list.toArray(predicates)).getRestriction();
         }, pageable);
+
+//        Page<Template> page = templateRepository.findAll(new Specification<Template>() {
+//            @Nullable
+//            @Override
+//            public Predicate toPredicate(Root<Template> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+//
+////                List<Predicate> predicates = new ArrayList<>();
+////                if(null != minDate){
+////                    predicates.add(criteriaBuilder.greaterThan(root.get("subscribeTime"), minDate));
+////                }
+////                if(null != maxDate){
+////                    predicates.add(criteriaBuilder.lessThan(root.get("subscribeTime"), maxDate));
+////                }
+////                if(null != nickname){
+////                    predicates.add(criteriaBuilder.like(root.get("nickname"), "%"+nickname+"%"));
+////                }
+////                return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
+//
+//
+//                List<Predicate> list = new ArrayList<>();
+//                Predicate[] predicates = new Predicate[list.size()];
+//                return criteriaQuery.where(list.toArray(predicates)).getRestriction();
+//            }
+//        }, pageable);
 
         return page;
     }
