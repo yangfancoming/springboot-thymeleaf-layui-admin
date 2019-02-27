@@ -5,9 +5,15 @@ import com.chang.param.SysResQuery;
 import com.chang.repository.SysResRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by ANdady on 2019/2/23.
@@ -19,8 +25,33 @@ public class SysResService {
     @Autowired
     private SysResRepository resRepository;
 
+    /**
+     * 加载资源(权限)数据
+     *
+     * @param pageNo 当前页码
+     * @param limit 每页的数据量
+     * @param query 查询条件
+     * @return {Page} 分页数据
+     * @throws Exception
+     */
     public Page<SystemResource> findAllSysRes(int pageNo, int limit, SysResQuery query) throws Exception {
+        Pageable pageable = PageRequest.of(pageNo, limit);
+
+        Page<SystemResource> page = resRepository.findAll(((root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> list = new ArrayList<>();
+            javax.persistence.criteria.Predicate[] predicates = new javax.persistence.criteria.Predicate[list.size()];
+            return criteriaQuery.where(list.toArray(predicates)).getRestriction();
+        }), pageable);
 
         return null;
+    }
+
+    public SystemResource findSysRes(Long resourceId) throws Exception {
+        Assert.notNull(resourceId, "");
+
+        SystemResource resource = resRepository.findById(resourceId).orElse(null);
+        Assert.notNull(resource, "");
+
+        return resource;
     }
 }
