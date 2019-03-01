@@ -1,6 +1,7 @@
 package com.chang.service;
 
 import com.chang.model.SystemResource;
+import com.chang.param.SysResDTO;
 import com.chang.param.SysResQuery;
 import com.chang.repository.SysResRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,12 +47,58 @@ public class SysResService {
         return null;
     }
 
+    /**
+     * 通过ID获取系统资源
+     *
+     * @param resourceId 资源ID
+     * @return {SystemResource} 系统资源
+     * @throws Exception
+     */
     public SystemResource findSysRes(Long resourceId) throws Exception {
-        Assert.notNull(resourceId, "");
+        Assert.notNull(resourceId, "资源ID为空");
 
         SystemResource resource = resRepository.findById(resourceId).orElse(null);
         Assert.notNull(resource, "");
 
         return resource;
+    }
+
+    /**
+     * 保存资源信息
+     *
+     * @param sysResDTO 系统资源DTO
+     * @throws Exception
+     */
+    public void saveSysRes(SysResDTO sysResDTO) throws Exception {
+        SystemResource resource = sysResDTO.getSysResInstance();
+        resRepository.save(resource);
+    }
+
+    /**
+     * 编辑资源信息
+     *
+     * @param resId 资源ID
+     * @param sysResDTO 系统资源DTO
+     * @throws Exception
+     */
+    public void modifySysRes(Long resId, SysResDTO sysResDTO) throws Exception {
+        Assert.notNull(resId, "资源ID为空");
+
+        SystemResource resource = resRepository.findById(resId).orElse(null);
+        Assert.notNull(resource, "无法获取系统资源(资源ID不存在)");
+
+        sysResDTO.transfer(resource);
+        resRepository.save(resource);
+    }
+
+    /**
+     * 删除资源
+     *
+     * @param resId 资源ID
+     * @throws Exception
+     */
+    public void deleteSysRes(Long resId) throws Exception {
+        Assert.notNull(resId, "资源ID为空");
+        resRepository.deleteById(resId);
     }
 }
